@@ -46,7 +46,9 @@ namespace IdentityServer3.Contrib.Store.Redis
         public async Task<RefreshToken> GetAsync(string key)
         {
             var json = await _db.StringGetAsync(key);
-            var token = FromJson(json);
+            RefreshToken token = null;
+            if(json.HasValue)
+                token = FromJson(json);
             return token;
         }
 

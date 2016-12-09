@@ -36,7 +36,10 @@ namespace IdentityServer3.Contrib.Store.Redis
         public async Task<AuthorizationCode> GetAsync(string key)
         {
             var json = await _db.StringGetAsync(key);
-            return FromJson(json);
+            AuthorizationCode authorizationCode = null;
+            if (json.HasValue)
+                authorizationCode = FromJson(json);
+            return authorizationCode;
         }
 
         public async Task RemoveAsync(string key)
